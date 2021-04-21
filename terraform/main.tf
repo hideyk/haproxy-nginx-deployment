@@ -82,19 +82,22 @@ resource "aws_instance" "load_balancer" {
 
 
     #####################
-    # Setup Ansible on HAProxy server
+    # Setup Ansible service on HAProxy server
     #####################
     provisioner "remote-exec" {
         scripts = ["ansible-setup.sh"]
     }
 
+    #####################
+    # Copy Ansible playbooks to remote
+    #####################
     provisioner "file" {
         source = "../ansible"
         destination = "/home/ubuntu/alation"
     }
 
     #####################
-    # Run Ansible on HAProxy server
+    # Run Ansible playbook on HAProxy server
     #####################
     provisioner "remote-exec" {
         scripts = ["ansible-run.sh"]
