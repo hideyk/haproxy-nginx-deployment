@@ -1,0 +1,68 @@
+########################
+# PROVIDER
+########################
+
+provider "aws" {
+    region = var.region
+}
+
+########################
+# AWS VPC
+########################
+
+resource "aws_vpc" "main" {
+    cidr_block = "10.0.0.0/16"
+    tags = {
+        Name = "${var.project_name} VPC"
+    }
+}
+
+########################
+# EC2 Instances
+########################
+
+resource "aws_instance" "web_1" {
+    ami = var.web_ami
+    instance_type = var.web_instance_type
+    subnet_id = aws_subnet.primary
+
+    user_data = <<-EOF
+		#! /bin/bash
+        sudo hostnamectl set-hostname ${var.web_hostname}-1
+	    EOF
+    
+    tags = {
+        Name = "Web Instance 1"
+    }
+}
+
+resource "aws_instance" "web_2" {
+    ami = var.web_ami
+    instance_type = var.web_instance_type
+    subnet_id = aws_subnet.secondary
+    
+    user_data = <<-EOF
+		#! /bin/bash
+        sudo hostnamectl set-hostname ${var.web_hostname}-2
+	    EOF
+
+    tags = {
+        Name = "Web Instance 2"
+    }
+}
+
+resource "aws_instance" "load_balancer" {
+    ami = var.load_balancer_ami
+    instance_type = var.load_balancer_instance_type
+    subnet_id = aws_subnet.primary
+    
+    user_data = <<-EOF
+		#! /bin/bash
+        sudo hostnamectl set-hostname ${var.load_balancer_hostname}
+	    EOF
+
+    tags = {
+        Name = "Load Balancer Instance"
+    }
+}
+
