@@ -1,2 +1,2 @@
 project_name = "Alation"
-key_pair        = "alation-keypair"
+key_pair     = "alation-keypair"
