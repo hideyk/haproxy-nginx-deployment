@@ -1,0 +1,12 @@
+[web]
+${web_1}
+${web_2}
+
+
+[load_balancer]
+${load_balancer}
+
+
+[all:children]
+web
+load_balancer

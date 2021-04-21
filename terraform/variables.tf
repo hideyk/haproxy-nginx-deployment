@@ -22,6 +22,11 @@ variable "web_instance_type" {
     default = "t3.micro"
 }
 
+variable "key_pair" {
+    description = "Key pair for SSH"
+    type = string
+}
+
 variable "web_hostname" {
     description = "Hostname for Web instances"
     type = string
