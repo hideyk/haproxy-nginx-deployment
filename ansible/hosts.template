@@ -4,7 +4,7 @@ ${web_2}
 
 
 [load_balancer]
-${load_balancer}
+localhost ansible_connection=local
 
 
 [all:children]

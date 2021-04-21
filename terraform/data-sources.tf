@@ -6,13 +6,11 @@ data "template_file" "hosts" {
   template = file("${path.module}/../ansible/hosts.template")
   depends_on = [
     aws_instance.web_1,
-    aws_instance.web_2,
-    aws_instance.load_balancer
+    aws_instance.web_2
   ]
   vars = {
     web_1 = aws_instance.web_1.private_ip
     web_2 = aws_instance.web_2.private_ip
-    load_balancer = aws_instance.load_balancer.private_ip
   }
 }
 
