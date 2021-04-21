@@ -25,6 +25,9 @@ resource "aws_instance" "web_1" {
     ami = var.web_ami
     instance_type = var.web_instance_type
     subnet_id = aws_subnet.primary
+    vpc_security_group_ids = [
+        aws_security_group.web_sg.id
+    ]
 
     user_data = <<-EOF
 		#! /bin/bash
@@ -40,6 +43,9 @@ resource "aws_instance" "web_2" {
     ami = var.web_ami
     instance_type = var.web_instance_type
     subnet_id = aws_subnet.secondary
+    vpc_security_group_ids = [
+        aws_security_group.web_sg.id
+    ]
     
     user_data = <<-EOF
 		#! /bin/bash
@@ -55,6 +61,9 @@ resource "aws_instance" "load_balancer" {
     ami = var.load_balancer_ami
     instance_type = var.load_balancer_instance_type
     subnet_id = aws_subnet.primary
+    vpc_security_group_ids = [
+        aws_security_group.load_balancer_sg.id
+    ]
     
     user_data = <<-EOF
 		#! /bin/bash
