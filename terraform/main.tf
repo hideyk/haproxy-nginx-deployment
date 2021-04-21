@@ -25,7 +25,7 @@ resource "aws_instance" "web_1" {
     ami = var.web_ami
     instance_type = var.web_instance_type
     key_name      = var.key_pair
-    subnet_id = aws_subnet.primary
+    subnet_id = aws_subnet.primary.id
     vpc_security_group_ids = [
         aws_security_group.web_sg.id
     ]
@@ -44,7 +44,7 @@ resource "aws_instance" "web_2" {
     ami = var.web_ami
     instance_type = var.web_instance_type
     key_name      = var.key_pair
-    subnet_id = aws_subnet.secondary
+    subnet_id = aws_subnet.secondary.id
     vpc_security_group_ids = [
         aws_security_group.web_sg.id
     ]
@@ -63,7 +63,7 @@ resource "aws_instance" "load_balancer" {
     ami = var.load_balancer_ami
     instance_type = var.load_balancer_instance_type
     key_name      = var.key_pair
-    subnet_id = aws_subnet.primary
+    subnet_id = aws_subnet.primary.id
     vpc_security_group_ids = [
         aws_security_group.load_balancer_sg.id
     ]

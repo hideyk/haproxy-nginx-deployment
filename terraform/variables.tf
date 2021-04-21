@@ -30,7 +30,7 @@ variable "key_pair" {
 variable "web_hostname" {
     description = "Hostname for Web instances"
     type = string
-    default = "${var.region}-web"
+    default = "alation-web"
 }
 
 variable "load_balancer_ami" {
@@ -48,5 +48,5 @@ variable "load_balancer_instance_type" {
 variable "load_balancer_hostname" {
     description = "Hostname for Load Balancer instance"
     type = string
-    default = "${var.region}-lb"
+    default = "alation-lb"
 }
