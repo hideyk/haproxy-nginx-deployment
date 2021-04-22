@@ -10,6 +10,11 @@ variable "region" {
     default = "us-east-1"
 }
 
+variable "key_pair" {
+    description = "Key pair for SSH"
+    type = string
+}
+
 variable "web_ami" {
     description = "AMI for Web instances"
     type = string
@@ -20,11 +25,6 @@ variable "web_instance_type" {
     description = "Instance type for Web instances"
     type = string
     default = "t3.micro"
-}
-
-variable "key_pair" {
-    description = "Key pair for SSH"
-    type = string
 }
 
 variable "web_hostname" {

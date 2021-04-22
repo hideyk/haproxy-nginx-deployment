@@ -1,0 +1,12 @@
+[web]
+10.0.1.115
+10.0.2.89
+
+
+[load_balancer]
+localhost ansible_connection=local
+
+
+[all:children]
+web
+load_balancer
