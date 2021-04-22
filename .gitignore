@@ -1,4 +1,5 @@
-*.terraform
+*.terraform*
+*.tfstate*
 *.hcl
 *.pem
 *.ppk
