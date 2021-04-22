@@ -2,3 +2,4 @@
 *.hcl
 *.pem
 *.ppk
+hosts
