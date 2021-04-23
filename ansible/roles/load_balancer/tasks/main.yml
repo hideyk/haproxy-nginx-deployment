@@ -1,0 +1,19 @@
+---
+- name: Update & upgrade apt cache
+  apt:
+    update_cache: yes
+    upgrade: full
+
+- name: Download haproxy package
+  ansible.builtin.package:
+    name: "haproxy"
+
+- name: Copy the config file to remote system
+  template:
+    src: "haproxy.cfg"
+    dest: "/etc/haproxy/haproxy.cfg"
+
+- name: Start service
+  service:
+    name: "haproxy"
+    state: restarted

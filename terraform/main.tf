@@ -99,9 +99,9 @@ resource "aws_instance" "load_balancer" {
     #####################
     # Run Ansible playbook on HAProxy server
     #####################
-    # provisioner "remote-exec" {
-    #     scripts = ["ansible-run.sh"]
-    # }
+    provisioner "remote-exec" {
+        scripts = ["ansible-run.sh"]
+    }
 
     tags = {
         Name = "Load Balancer Instance"
