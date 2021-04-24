@@ -62,18 +62,8 @@
             html_file_location: /usr/share/nginx/html
             web_server_name: Ansible NGINX collection
 
-# - name: Install & configure nginx on web servers
-#   hosts: web
-#   become: yes
-#   vars:
-#     ansible_ssh_private_key_file: ./alation-keypair.pem
-#   roles:
-#     web
 
 - hosts: load_balancer
   become: yes
-  # vars:
-  #   ansible_ssh_private_key_file: ./alation-keypair.pem
-  #   ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
   roles:
     - load_balancer

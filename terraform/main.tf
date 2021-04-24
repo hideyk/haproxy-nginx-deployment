@@ -76,7 +76,7 @@ resource "aws_instance" "load_balancer" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("alation-keypair.pem")
+      private_key = file("${var.key_pair}.pem")
       host        = self.public_ip
     }
 
