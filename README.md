@@ -45,6 +45,8 @@ On your favourite browser, [log in to your AWS account](https://aws.amazon.com/c
 
 You're all set!
 
+> Note: Since key pairs are region-specific, trying to deploy your EC2 resources in a region without the configured key pair will fail.
+
 <br>
 
 ---
@@ -68,6 +70,12 @@ terraform apply -auto-approve # Only run this when you're sure of provisioning i
 Terraform will proceed to spin up our cloud resources using AWS CLI, 
 
 ---
+
+## Pitfalls
+1. Web servers currently allow inbound web traffic --> Should be in private subnet
+2. Web servers not created dynaically. Should be able to scale up and down based on input count.
+
+
 
 ## References
 

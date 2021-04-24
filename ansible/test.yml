@@ -1,0 +1,34 @@
+---
+# 1) Testing infrastructure
+- hosts: all
+  become: yes
+  vars:
+    ansible_ssh_private_key_file: ./alation-keypair.pem
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  roles:
+    - test_infra
+
+# 2) Testing services
+- hosts: all
+  become: yes
+  vars:
+    ansible_ssh_private_key_file: ./alation-keypair.pem
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  roles:
+    - test_services
+
+# 3) Bring down 1 web server, test load balancer
+
+- hosts: web_01
+  become: yes
+  vars:
+    ansible_ssh_private_key_file: ./alation-keypair.pem
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  service:
+    name: nginx
+    state: stopped
+  # simple kill
+
+- hosts: load_balancer
+  become: yes
+  # curl load balancer

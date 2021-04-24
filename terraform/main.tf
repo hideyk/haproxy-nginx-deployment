@@ -103,6 +103,13 @@ resource "aws_instance" "load_balancer" {
         scripts = ["ansible-run.sh"]
     }
 
+    #####################
+    # Testing infrastructure & services
+    #####################
+    provisioner "remote-exec" {
+        scripts = ["test-run.sh"]
+    }
+
     tags = {
         Name = "Load Balancer Instance"
     }

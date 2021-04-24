@@ -1,0 +1,16 @@
+1. Check if services are up on 3 machines
+-- Instances are up or down
+
+2. Hit endpoint through curl and return 
+-- Services are up or down
+-- Round robin return 1/2/1/2/1/2
+
+3. Test load balancer functionality 
+-- Bring down 1 web server
+-- Hit endpoint through curl
+-- Still serves request from other web server
+
+
+ 
+- SSH into load balancer server
+1)
