@@ -1,0 +1,2 @@
+web01_ip: ${web_1}
+web02_ip: ${web_2}

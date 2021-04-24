@@ -10,3 +10,7 @@ localhost ansible_connection=local
 [all:children]
 web
 load_balancer
+
+
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'

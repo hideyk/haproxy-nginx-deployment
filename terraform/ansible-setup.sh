@@ -4,6 +4,6 @@ until [[ -f /var/lib/cloud/instance/boot-finished ]]; do
 done
 sudo apt update && sudo apt upgrade -y
 sudo apt install ansible -y
-sudo ansible-galaxy collection install nginxinc.nginx_core
+ansible-galaxy collection install nginxinc.nginx_core
 
 mkdir /home/ubuntu/alation

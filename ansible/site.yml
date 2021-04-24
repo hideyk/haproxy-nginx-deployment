@@ -1,8 +1,18 @@
 ---
+- hosts: load_balancer
+  become: yes
+  tasks:
+    - name: Restrict permissions of alation-keypair.pem
+      file:
+        path: /home/ubuntu/alation/ansible/alation-keypair.pem
+        mode: '0600'
+
+
 - hosts: web
   become: yes
   vars:
     ansible_ssh_private_key_file: ./alation-keypair.pem
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
   collections:
     - nginxinc.nginx_core
   roles:
@@ -60,10 +70,10 @@
 #   roles:
 #     web
 
-- name: Install & configure HAProxy on load balancer servers
-  hosts: load_balancer
+- hosts: load_balancer
   become: yes
-  vars:
-    ansible_ssh_private_key_file: ./alation-keypair.pem
+  # vars:
+  #   ansible_ssh_private_key_file: ./alation-keypair.pem
+  #   ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
   roles:
-    load_balancer
+    - load_balancer

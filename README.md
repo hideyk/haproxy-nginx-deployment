@@ -24,13 +24,24 @@ For Terraform, there are [various ways to install the binary on Windows](https:/
 
 For AWS CLI, you may follow this [guide to install AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-windows.html) using the MSI installer.
 
+
 ## Infrastructure set-up
+
+Using git bash, clone this repository and cd into the terraform folder.
 ```bash
 git clone https://github.com/hideyukikanazawa/haproxy-nginx-deployment.git
 cd haproxy-nginx-deployment/terraform
+```
+
+Run the terraform initialize command to initialize the working directory containing Terraform configuration files. It is safe to now run the plan command to view our infrastructure plan and check if there are any misconfigured resources. (Note: This doesn't provision anything yet)
+
+Since we're using AWS as the provider, Terraform interacts with the AWS CLI and deploys the infrastructure with our configured AWS account. Run the terraform apply command to apply all changes and start up our defined cloud services. 
+```bash
 terraform init
 terraform plan
 terraform apply -auto-approve # Only run this when you're sure of provisioning infrastructure
 ```
+Terraform will proceed to spin up our cloud resources using AWS CLI, 
+
 
 Dynamic inventory hosts: https://stackoverflow.com/questions/45489534/best-way-currently-to-create-an-ansible-inventory-from-terraform

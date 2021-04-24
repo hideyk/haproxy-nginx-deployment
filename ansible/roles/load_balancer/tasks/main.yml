@@ -4,14 +4,28 @@
     update_cache: yes
     upgrade: full
 
+- name: Install software-properties-common
+  apt:
+    name: software-properties-common
+    state: present
+
+- name: Add apt repositories into source list
+  apt_repository:
+    repo: ppa:vbernat/haproxy-2.1
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  
 - name: Download haproxy package
   ansible.builtin.package:
     name: "haproxy"
 
-- name: Copy the config file to remote system
+- name: Copy the HAProxy config file to remote system
   template:
-    src: "haproxy.cfg"
-    dest: "/etc/haproxy/haproxy.cfg"
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    mode: 0644
 
 - name: Start service
   service:

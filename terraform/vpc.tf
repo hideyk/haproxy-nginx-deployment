@@ -10,7 +10,12 @@ resource "aws_route_table" "main_route_table" {
   }
 }
 
-resource "aws_route_table_association" "subnet-association" {
+resource "aws_route_table_association" "pri-subnet-association" {
   subnet_id      = aws_subnet.primary.id
+  route_table_id = aws_route_table.main_route_table.id
+}
+
+resource "aws_route_table_association" "sec-subnet-association" {
+  subnet_id      = aws_subnet.secondary.id
   route_table_id = aws_route_table.main_route_table.id
 }
