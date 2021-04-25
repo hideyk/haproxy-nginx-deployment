@@ -72,9 +72,18 @@ Terraform will proceed to spin up our cloud resources using AWS CLI,
 ---
 
 ## Pitfalls
-1. Web servers currently allow inbound web traffic --> Should be in private subnet
-2. Web servers not created dynaically. Should be able to scale up and down based on input count.
+1. There should be one public subnet and two private subnets
+-- Web servers should be in private subnet and not allow inbound web traffic
+-- Web servers should be allowed to connect to Internet for apt update / upgrade (NAT gateway?)
+-- 
 
+2. Web server count should be dynamic. 
+-- Spin up multiple web servers based on count variable
+-- Store list of public and private IPs to hosts for ansible
+
+3. AWS AMI should be dynamic. Pull Ubuntu v20 AMI based on region.
+
+4. Ansible playbook only for ubuntu v20. Should make it for RHEL / CentOS too
 
 
 ## References
