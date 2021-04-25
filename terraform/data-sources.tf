@@ -11,6 +11,8 @@ data "template_file" "hosts" {
   vars = {
     web_1 = aws_instance.web_1.private_ip
     web_2 = aws_instance.web_2.private_ip
+    web_1_public = aws_instance.web_1.public_ip
+    web_2_public = aws_instance.web_2.public_ip
   }
 }
 

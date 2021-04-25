@@ -1,6 +1,6 @@
 [web]
-${web_1}
-${web_2}
+${web_1}    public_ip=${web_1_public}
+${web_2}    public_ip=${web_2_public}
 
 
 [load_balancer]

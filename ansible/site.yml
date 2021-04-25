@@ -62,6 +62,18 @@
             html_file_location: /usr/share/nginx/html
             web_server_name: Ansible NGINX collection
 
+- hosts: web
+  become: yes
+  vars:
+    ansible_ssh_private_key_file: ./alation-keypair.pem
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  tasks:
+    - name: Copy customised nginx index.html file to default folder /usr/share/nginx/html
+      copy:
+        src: ./nginx-index.html
+        dest: /usr/share/nginx/html/index.html
+        mode: '0644'
+
 
 - hosts: load_balancer
   become: yes

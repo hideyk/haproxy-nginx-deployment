@@ -5,30 +5,74 @@
   vars:
     ansible_ssh_private_key_file: ./alation-keypair.pem
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
-  roles:
-    - test_infra
+  tasks:
+    - name: Pinging hosts
+      ping:
+
 
 # 2) Testing services
-- hosts: all
+- hosts: load_balancer
   become: yes
-  vars:
-    ansible_ssh_private_key_file: ./alation-keypair.pem
-    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
-  roles:
-    - test_services
-
-# 3) Bring down 1 web server, test load balancer
-
-- hosts: web_01
-  become: yes
-  vars:
-    ansible_ssh_private_key_file: ./alation-keypair.pem
-    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
-  service:
-    name: nginx
-    state: stopped
-  # simple kill
+  tasks:
+    - name: Curling web services
+      uri:
+        url: "http://{{ item }}:80"
+        status_code: 200
+      loop: "{{ groups['web']|map('extract', hostvars, 'public_ip')|list }}"
 
 - hosts: load_balancer
   become: yes
-  # curl load balancer
+  tasks:
+    - name: Curling haproxy
+      uri:
+        url: "http://localhost:80"
+        status_code: 200
+      with_sequence: count=5
+
+# 3) Bring down 1 web server, test load balancer
+
+- hosts: "{{ groups['web'][0] }}"
+  become: yes
+  vars:
+    ansible_ssh_private_key_file: ./alation-keypair.pem
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  tasks:
+    - name: Stopping nginx on first web instance
+      service:
+        name: nginx
+        state: stopped
+
+- hosts: load_balancer
+  tasks:
+    - name: Pause for 5 seconds
+      pause:
+        seconds: 5
+
+- hosts: load_balancer
+  become: yes
+  tasks:
+    - name: Curling load balancer n times
+      uri:
+        url: "http://localhost:80"
+        status_code: 200
+      with_sequence: count=5
+
+- hosts: "{{ groups['web'][0] }}"
+  become: yes
+  vars:
+    ansible_ssh_private_key_file: ./alation-keypair.pem
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  tasks:
+    - name: Starting nginx on first web instance
+      service:
+        name: nginx
+        state: started
+
+- hosts: load_balancer
+  become: yes
+  tasks:
+    - name: Curling load balancer n times
+      uri:
+        url: "http://localhost:80"
+        status_code: 200
+      with_sequence: count=5
