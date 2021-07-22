@@ -6,7 +6,11 @@ AWS | Terraform | Ansible | Nginx | HAProxy
 <img src="images/aws.png" width="100">  |  <img src="images/terraform.png" width="100">  | <img src="images/ansible.png" width="100"> | <img src="images/nginx.png" width="100"> | <img src="images/haproxy.png" width="100"> 
 ---
 ## Motivation
-As part of interview process with Alation...(fill in text)
+For most modern day applications, unpredictable user traffic can be managed by having multiple nodes to serve additional requests. In the case of a web application, we can have two or more web servers behind a load balancer which handles and distributes user requests from the public web. 
+
+In this project, we explore deploying a simple webpage on two nginx web servers. Web requests are load balanced by a HAProxy node to ensure each web node isn't overworked. 
+
+To deploy the application in a reliable and repeatable fashion, we automate the infrastructure provisioning with Terraform while Ansible handles the server set-up as well as installing dependencies. This way we have a phoenix server design with resilience to configuration drift. 
 
 ---
 ## Requirements
@@ -72,14 +76,18 @@ Terraform will proceed to spin up our cloud resources using AWS CLI,
 ---
 
 ## Pitfalls
-1. There should be one public subnet and two private subnet. While the HAProxy resides in the public subnet for inbound public traffic, Web servers should be created in private subnets so as to not allow direct inbound web traffic. A NAT gateway/instance should be provisioned in the public subnet and outbound web traffic for the web servers should be routed to the NAT gateway/instance for internet access. 
+1. There should be one public subnet and two private subnets. While the HAProxy resides in the public subnet for inbound public traffic, Web servers should be created in private subnets so as to not allow direct inbound web traffic. A NAT gateway/instance should be provisioned in the public subnet. Outbound web traffic required for the web servers for package and dependency installation should be routed to the NAT gateway/instance for internet access. 
 
 
-2. Web server count should be dynamic. The current set-up allows for 2 web servers to be provisioned. While traffic is load balanced, it would be more ideal to make the no. of web servers dynamic as a count variable to respond to varying peak capacities. 
+2. Web server count should be dynamic. The current set-up allows for a static no. of 2 web servers to be provisioned. While traffic is load balanced, it would be more ideal to make the no. of web servers dynamic as a count variable to respond to varying peak capacities. 
 
-3. AWS AMI should be dynamic. Pull Ubuntu v20 AMI based on region.
+3. AWS AMI should be dynamic and allow pulling of relevant Ubuntu v20 AMI image based on AWS region.
 
-4. Ansible playbook only for ubuntu v20. Should make it for RHEL / CentOS too
+4. Ansible playbook should account for other OS as well (RHEL & CentOS) if required. 
+
+<br>
+
+---
 
 
 ## References
