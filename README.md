@@ -21,14 +21,14 @@ This guide assumes the user is running a WindowsOS with the following software i
 
 For Git CLI installation, [this guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) will be helpful.
 
-For Terraform, there are [various ways to install the binary on Windows](https://learn.hashicorp.com/tutorials/terraform/install-cli). For simplicity sake, you can download the updated zipped package and add the unzipped binary's path to your `PATH`.
+For Terraform, there are [various ways to install the binary on Windows](https://learn.hashicorp.com/tutorials/terraform/install-cli). For simplicity, you can download the updated zipped package and add the unzipped binary's path to your `PATH`.
 
 For AWS CLI, you may follow this [guide to install AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-windows.html) using the MSI installer.
 <br><br>
 
 ---
 ## Set-up & Configurations
-Before we're able to deploy our resources, there are some set-up steps required. These steps are not recommended to be automated as they do not conform to best practices from a security and reliability perspective.
+Before we're able to deploy our resources, there are some set-up steps required. These steps are not recommended to be automated as doing so may not conform to best practices from a security and reliability perspective.
 
 ### Creating a region-specific key pair on AWS console
 On your favourite browser, [log in to your AWS account](https://aws.amazon.com/console/) and access the EC2 page. Since key pairs are region-specific, select the region you plan to deploy AWS resources at the top right hand corner. For the purpose of this demonstration, we are using ```US East (N. Virginia) us-east-1``` as the default region.
@@ -72,14 +72,10 @@ Terraform will proceed to spin up our cloud resources using AWS CLI,
 ---
 
 ## Pitfalls
-1. There should be one public subnet and two private subnets
--- Web servers should be in private subnet and not allow inbound web traffic
--- Web servers should be allowed to connect to Internet for apt update / upgrade (NAT gateway?)
--- 
+1. There should be one public subnet and two private subnet. While the HAProxy resides in the public subnet for inbound public traffic, Web servers should be created in private subnets so as to not allow direct inbound web traffic. A NAT gateway/instance should be provisioned in the public subnet and outbound web traffic for the web servers should be routed to the NAT gateway/instance for internet access. 
 
-2. Web server count should be dynamic. 
--- Spin up multiple web servers based on count variable
--- Store list of public and private IPs to hosts for ansible
+
+2. Web server count should be dynamic. The current set-up allows for 2 web servers to be provisioned. While traffic is load balanced, it would be more ideal to make the no. of web servers dynamic as a count variable to respond to varying peak capacities. 
 
 3. AWS AMI should be dynamic. Pull Ubuntu v20 AMI based on region.
 
