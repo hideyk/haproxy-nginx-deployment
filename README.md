@@ -1,5 +1,8 @@
 # Automating two-tier infrastructure provisioning through Ansible & Terraform
 
+## Architecture Diagram
+![](images/haproxy-nginx-deployment.png)
+
 ## Technology stack
 AWS | Terraform | Ansible | Nginx | HAProxy
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
